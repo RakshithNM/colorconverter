@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>color-converter</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="colorValue" type="text">
+    <p>{{ convertedValue }}</p>
+    <button @click="convert">CONVERT</button>
+    <input type="checkbox" v-model="convertRGB">
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
