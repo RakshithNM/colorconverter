@@ -3,12 +3,15 @@
 :root {
   --main-bg-color: #0F0F0F;
   --title-color: #A3D2CA;
+  --maindiv-bgcolor: transparent;
 }
 
 body {
   margin: 0;
   padding: 0;
   color: white;
+  text-shadow: 2px 2px #000000;
+  font-family: 'Baloo Tamma 2', cursive;
 }
 
 #app {
@@ -19,10 +22,23 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  background-size: cover;
+  background-position: center;
 }
 
-h1 {
-  font-family: 'Baloo Tamma 2', cursive;
+.main-div {
+  width: 80%;
+  height: 80%;
+  background: var(--maindiv-bgcolor);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid white;
+  border-radius: 30px;
 }
 
 .checkbox {
@@ -31,19 +47,6 @@ h1 {
   align-items: center;
 }
 
-.color-value {
-  height: 2vh;
-  width: 600px;
-  max-width: 80%;
-  padding: 12px 20px;
-  border-radius: 30px;
-  font-size: 32px;
-  color: white;
-}
-
-.color-value::placeholder {
-  color: white;
-}
 
 input[type="checkbox"] {
   width:70px;
@@ -82,11 +85,26 @@ input:checked[type="checkbox"]{
   box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
 }
 
+.color-value {
+  height: 2vh;
+  max-width: 60%;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 32px;
+  color: white;
+}
+
+.color-value::placeholder {
+  color: white;
+  text-shadow: 2px 2px #000000;
+}
+
 input[type="text"] {
   position: relative;
   height: 60px;
   width: 100%;
-  background: transparent;
+  background: black;
+  opacity: 0.5;
   border: none;
   border-radius: 8px;
   margin: 15px 0 20px;
@@ -95,6 +113,14 @@ input[type="text"] {
   padding: 0 20px;
   letter-spacing: 2px;
   border: 1px solid white;
+}
+
+.convertedValue {
+  background-color: black;
+  color: white;
+  font-size: 32px;
+  padding: 20px;
+  border-radius: 30px;
 }
 
 button {

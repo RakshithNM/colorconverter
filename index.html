@@ -8,13 +8,15 @@
 </head>
 <body>
   <div id="app">
-    <h1>COLOR CONVERTER</h1>
-    <div class="checkbox">
-      <span>HEX TO RGB</span><input type="checkbox" v-model="convertRGB"><span>RGB TO HEX</span>
+    <div class="main-div">
+      <h1>COLOR CONVERTER</h1>
+      <div class="checkbox">
+        <span>HEX TO RGB</span><input type="checkbox" v-model="convertRGB"><span>RGB TO HEX</span>
+      </div>
+      <input v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255, 255, 255' : '#ffffff'">
+      <p v-if="convertedValue.length > 0" class="convertedValue">{{ convertedValue }}</p>
+      <button @click="convert">CONVERT</button>
     </div>
-    <input v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255, 255, 255' : '#ffffff'">
-    <p>{{ convertedValue }}</p>
-    <button @click="convert">CONVERT</button>
   </div>
   <script src="script.js"></script>
 </body>
