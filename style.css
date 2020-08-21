@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500&display=swap');
+
+:root {
+  --main-bg-color: #0F0F0F;
+  --title-color: #A3D2CA;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+#app {
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: var(--main-bg-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-family: 'Baloo Tamma 2', cursive;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-value {
+  height: 2vh;
+  width: 600px;
+  max-width: 80%;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 32px;
+  color: white;
+}
+
+.color-value::placeholder {
+  color: white;
+}
+
+input[type="checkbox"] {
+  width:70px;
+  height: 40px;
+  -webkit-appearance: none;
+  background-color: #4d4d4d;
+  border-radius:40px;
+  outline: none;
+  transition:all .8s ease-in-out;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+input[type="checkbox"]:before {
+  content:'';
+  display:block;
+  margin-top:5px;
+  margin-left:5px;
+  width:30px;
+  height:30px;
+ /* background: #737373;*/
+  border-radius: 20px;
+  transition:all 1s ease-in-out;
+  cursor: pointer;
+  background: linear-gradient(45deg, #c6c6c6 0%,#737373 60%);
+}
+
+input:checked[type="checkbox"]:before {
+  margin-left:35px;
+  transition:all 1s ease-in-out;
+  background: linear-gradient(45deg, #c6c6c6 0%,#737373 60%);
+  transform: rotate(90deg);
+}
+
+input:checked[type="checkbox"]{
+  background: #333333;
+  transition:all .8s ease-in-out;
+  box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
+}
+
+input[type="text"] {
+  position: relative;
+  height: 60px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  margin: 15px 0 20px;
+  outline: none;
+  font-size: 24px;
+  padding: 0 20px;
+  letter-spacing: 2px;
+  border: 1px solid white;
+}
+
+button {
+  position: relative;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+  font-size: 24px;
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+button:active {
+  background: #9c27b0;
+  transform: scale(0.99);
+}
+

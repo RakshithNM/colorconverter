@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>color-converter</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
   <div id="app">
-    <input v-model="colorValue" type="text">
+    <h1>COLOR CONVERTER</h1>
+    <div class="checkbox">
+      <span>HEX TO RGB</span><input type="checkbox" v-model="convertRGB"><span>RGB TO HEX</span>
+    </div>
+    <input v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255, 255, 255' : '#ffffff'">
     <p>{{ convertedValue }}</p>
     <button @click="convert">CONVERT</button>
-    <input type="checkbox" v-model="convertRGB">
   </div>
   <script src="script.js"></script>
 </body>
