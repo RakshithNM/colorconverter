@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>color-converter</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
@@ -14,7 +15,7 @@
         <span>HEX TO RGB</span><input type="checkbox" v-model="convertRGB"><span>RGB TO HEX</span>
       </div>
       <input v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255, 255, 255' : '#ffffff'">
-      <p v-if="convertedValue.length > 0" class="convertedValue">{{ convertedValue }}</p>
+      <p class="convertedValue">{{ convertedValue }}</p>
       <button @click="convert">CONVERT</button>
     </div>
   </div>
