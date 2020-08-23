@@ -65,9 +65,10 @@ var app = new Vue({
           b: parseInt(resultSix[3], 16)
         } : null;
       }
-      const rgbString = `rgb(${this.convertedValue.r},${this.convertedValue.g},${this.convertedValue.b})`;
+
+      this.convertedValue = `rgb(${this.convertedValue.r},${this.convertedValue.g},${this.convertedValue.b})`;
       const root = document.documentElement;
-      root.style.setProperty('--maindiv-bgcolor', rgbString);
+      root.style.setProperty('--maindiv-bgcolor', this.convertedValue);
     },
     rgbToHex(r, g, b) {
       return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
