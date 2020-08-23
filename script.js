@@ -17,6 +17,16 @@ var app = new Vue({
         this.convertHEXtoRGB();
       }
     },
+    clamp(inNumber) {
+      let number = inNumber;
+      if(inNumber > 255) {
+        number = 255;
+      }
+      else if(inNumber < 0) {
+        number = 0;
+      }
+      return number;
+    },
     convertRGBtoHEX() {
       if(this.colorValue.startsWith('#')) {
         this.conversionMessage = "Enter a rgb color value separated by commas";
@@ -31,7 +41,9 @@ var app = new Vue({
         return;
       }
       this.colorValue = this.colorValue.split(",");
-      this.colorValue = this.colorValue.map((item) => Number(item));
+      this.colorValue = this.colorValue.map((item) => {
+        return Number(item) > 255 || Number(item) < 0 ? this.clamp(Number(item)) : Number(item);
+      });
       this.convertedValue = this.rgbToHex(this.colorValue[0], this.colorValue[1], this.colorValue[2]);
       const root = document.documentElement;
       root.style.setProperty('--maindiv-bgcolor', this.convertedValue);

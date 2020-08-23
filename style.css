@@ -33,13 +33,14 @@ h1 {
   font-size: 32px;
   background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; 
+  -webkit-text-fill-color: transparent;
 }
 
 .checkbox {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-shadow: 0 1px 0 black;
 }
 
 .checkbox > span {
@@ -85,6 +86,17 @@ input:checked[type="checkbox"]{
   box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
 }
 
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 25px 0 25px 0;
+}
+
+.conversionMessage {
+  color: red;
+}
+
 .color-value::placeholder {
   color: black;
   opacity: 0.5;
@@ -98,14 +110,11 @@ input:checked[type="checkbox"]{
 input[type="text"] {
   position: relative;
   background: white;
-  border: none;
-  border-radius: 8px;
-  margin: 32px 0 32px;
+  border: 2px solid black;
   outline: none;
   font-size: 24px;
   padding: 0 20px;
   letter-spacing: 2px;
-  border: 1px solid white;
   color: black;
   height: 48px;
   width: 80%;
@@ -117,6 +126,7 @@ input[type="text"] {
 .convertedValue {
   color: white;
   font-size: 32px;
+  text-shadow: 0 1px 0 black;
 }
 
 button {
@@ -129,7 +139,7 @@ button {
   padding: 10px 15px;
   border-radius: 8px;
   text-align: center;
-  width: 35%;
+  width: 50%;
   align-self: center;
 }
 

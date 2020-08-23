@@ -14,9 +14,11 @@
       <div class="checkbox">
         <span>HEX TO RGB</span><input type="checkbox" v-model="convertRGB"><span>RGB TO HEX</span>
       </div>
-      <input v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255,255,255' : '#ffffff'">
-      <p class="convertedValue">{{ convertedValue }}</p>
-      <p style="color:white" class="conversionMessage">{{ conversionMessage }}</p>
+      <div class="main">
+        <input v-on:keyup.enter="convert" v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255,255,255' : '#ffffff'">
+        <p class="conversionMessage">{{ conversionMessage }}</p>
+        <p class="convertedValue">{{ convertedValue }}</p>
+      </div>
       <button @click="convert">CONVERT</button>
     </div>
   </div>
