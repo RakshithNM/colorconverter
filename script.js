@@ -47,6 +47,7 @@ var app = new Vue({
       this.convertedValue = this.rgbToHex(this.colorValue[0], this.colorValue[1], this.colorValue[2]);
       const root = document.documentElement;
       root.style.setProperty('--maindiv-bgcolor', this.convertedValue);
+      this.copyToClipboard();
     },
     convertHEXtoRGB() {
       if(!this.colorValue.startsWith('#')) {
@@ -81,14 +82,25 @@ var app = new Vue({
       this.convertedValue = `rgb(${this.convertedValue.r},${this.convertedValue.g},${this.convertedValue.b})`;
       const root = document.documentElement;
       root.style.setProperty('--maindiv-bgcolor', this.convertedValue);
+      this.copyToClipboard();
     },
     rgbToHex(r, g, b) {
       return "#" + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
     },
     componentToHex(c) {
       var hex = c.toString(16);
-      console.log(hex);
       return hex.length == 1 ? "0" + hex : hex;
+    },
+    copyToClipboard() {
+      const el = document.createElement('textarea');
+      el.value = this.convertedValue;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
     }
   },
   watch: {
