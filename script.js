@@ -4,9 +4,12 @@ var app = new Vue({
     colorValue: '',
     convertedValue: '',
     convertRGB: true,
+    conversionMessage: ''
   },
   methods: {
     convert() {
+      this.conversionMessage = '';
+      this.convertedValue = '';
       if(this.convertRGB) {
         this.convertRGBtoHEX();
       }
@@ -16,7 +19,15 @@ var app = new Vue({
     },
     convertRGBtoHEX() {
       if(this.colorValue.startsWith('#')) {
-        this.convertedValue = "Enter a rgb color value separated by commas";
+        this.conversionMessage = "Enter a rgb color value separated by commas";
+        return;
+      }
+      if(!this.colorValue || this.colorValue === '') {
+        this.conversionMessage = "Enter some value for conversion";
+        return;
+      }
+      if(!(/\d{1,3},\d{1,3},\d{1,3}/.exec(this.colorValue))) {
+        this.conversionMessage = "Enter a valid RGB string separated by commas";
         return;
       }
       this.colorValue = this.colorValue.split(",");
@@ -27,15 +38,33 @@ var app = new Vue({
     },
     convertHEXtoRGB() {
       if(!this.colorValue.startsWith('#')) {
-        this.convertedValue = "Enter a hex value starting with a #";
+        this.conversionMessage = "Enter a hex value starting with a #";
         return;
       }
-      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorValue);
-      this.convertedValue = result ? { 
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      } : null;
+      if(!this.colorValue || this.colorValue === '') {
+        this.conversionMessage = "Enter some value for conversion";
+        return;
+      }
+      if(!(/^#(?:[0-9A-F]{3}|[0-9A-F]{6})$/i.exec(this.colorValue))) {
+        this.conversionMessage = "Enter a valid HEX string of length 3 or 6";
+        return;
+      }
+      const resultSix = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorValue);
+      const resultThree = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(this.colorValue);
+      if(resultThree) {
+        this.convertedValue = resultThree ? {
+          r: parseInt(resultThree[1]+resultThree[1], 16),
+          g: parseInt(resultThree[2]+resultThree[2], 16),
+          b: parseInt(resultThree[3]+resultThree[3], 16)
+        } : null;
+      }
+      else {
+        this.convertedValue = resultSix ? {
+          r: parseInt(resultSix[1], 16),
+          g: parseInt(resultSix[2], 16),
+          b: parseInt(resultSix[3], 16)
+        } : null;
+      }
       const rgbString = `rgb(${this.convertedValue.r},${this.convertedValue.g},${this.convertedValue.b})`;
       const root = document.documentElement;
       root.style.setProperty('--maindiv-bgcolor', rgbString);
@@ -49,15 +78,14 @@ var app = new Vue({
       return hex.length == 1 ? "0" + hex : hex;
     }
   },
-//  mounted() {
-//    fetch('https://source.unsplash.com/random')
-//      .then(function(response) {
-//          document.getElementById('app').style.backgroundImage = `url(${response.url})`;
-//      });
-//  },
   watch: {
-    convertRGB() {
-      this.colorValue = '';
+    convertRGB(val) {
+      if(val) {
+        this.colorValue = '';
+      }
+      else {
+        this.colorValue = '#';
+      }
     }
   }
 });
