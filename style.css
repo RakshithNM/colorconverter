@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 :root {
   --main-color: #000000;
-  --maindiv-bgcolor: black;
+  --maindiv-bgcolor: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
 }
 
 body {
@@ -15,6 +16,7 @@ body {
 
 #app {
   box-sizing: border-box;
+  background-image: var(--maindiv-bgcolor);
   background-color: var(--maindiv-bgcolor);
   position: absolute;
   width: 100%;
@@ -31,9 +33,7 @@ body {
 
 h1 {
   font-size: 32px;
-  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #000000;
 }
 
 .checkbox {
@@ -45,14 +45,19 @@ h1 {
 
 .checkbox > span {
   color: white;
-  padding: 20px;
+  background-color: #4d4d4d;
+  corner-shape: squircle;
+  border-radius: 8px;
+  padding: 8px;
+  margin-inline: 12px;
 }
 
 input[type="checkbox"] {
   width:70px;
   height: 40px;
   -webkit-appearance: none;
-  background-color: #4d4d4d;
+  background-color: #087f5b;
+  corner-shape: squircle;
   border-radius:40px;
   outline: none;
   transition:all .8s ease-in-out;
@@ -66,7 +71,7 @@ input[type="checkbox"]:before {
   margin-left:5px;
   width:30px;
   height:30px;
- /* background: #737373;*/
+  corner-shape: squircle;
   border-radius: 20px;
   transition:all 1s ease-in-out;
   cursor: pointer;
@@ -76,12 +81,12 @@ input[type="checkbox"]:before {
 input:checked[type="checkbox"]:before {
   margin-left:35px;
   transition:all 1s ease-in-out;
-  background: linear-gradient(45deg, #c6c6c6 0%,#737373 60%);
+  background: linear-gradient(45deg, #000000 0%,#737373 60%);
   transform: rotate(90deg);
 }
 
 input:checked[type="checkbox"]{
-  background: #333333;
+  background-color: #087f5b;
   transition:all .8s ease-in-out;
   box-shadow: 0px 0px 10px 0px rgba(255,255,255,1);
 }
@@ -108,8 +113,14 @@ input:checked[type="checkbox"]{
 }
 
 input[type="text"] {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
   position: relative;
   background: white;
+  corner-shape: squircle;
+  border-radius: 16px;
   border: 2px solid black;
   outline: none;
   font-size: 24px;
@@ -137,6 +148,7 @@ button {
   font-size: 24px;
   display: inline-block;
   padding: 10px 15px;
+  corner-shape: squircle;
   border-radius: 8px;
   text-align: center;
   width: 50%;

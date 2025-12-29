@@ -10,7 +10,7 @@ var app = new Vue({
     convert() {
       this.conversionMessage = '';
       this.convertedValue = '';
-      if(this.convertRGB) {
+      if (this.convertRGB) {
         this.convertRGBtoHEX();
       }
       else {
@@ -18,58 +18,63 @@ var app = new Vue({
       }
     },
     clamp(inNumber) {
-      let number = inNumber;
-      if(inNumber > 255) {
+      let number = Number(inNumber);
+      if (Number.isNaN(number)) {
+        return 0;
+      }
+      if (number > 255) {
         number = 255;
       }
-      else if(inNumber < 0) {
+      else if (number < 0) {
         number = 0;
       }
       return number;
     },
     convertRGBtoHEX() {
-      if(this.colorValue.startsWith('#')) {
-        this.conversionMessage = "Enter a rgb color value separated by commas";
-        return;
-      }
-      if(!this.colorValue || this.colorValue === '') {
+      const rawValue = this.colorValue;
+      if (!rawValue || rawValue.trim() === '') {
         this.conversionMessage = "Enter some value for conversion";
         return;
       }
-      if(!(/\d{1,3},\d{1,3},\d{1,3}/.exec(this.colorValue))) {
+      if (rawValue.trim().startsWith('#')) {
+        this.conversionMessage = "Enter a rgb color value separated by commas";
+        return;
+      }
+      const match = /^(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})$/.exec(rawValue.trim());
+      if (!match) {
         this.conversionMessage = "Enter a valid RGB string separated by commas";
         return;
       }
-      this.colorValue = this.colorValue.split(",");
-      this.colorValue = this.colorValue.map((item) => {
-        return Number(item) > 255 || Number(item) < 0 ? this.clamp(Number(item)) : Number(item);
-      });
-      this.convertedValue = this.rgbToHex(this.colorValue[0], this.colorValue[1], this.colorValue[2]);
+      const [, rStr, gStr, bStr] = match;
+      const rgbValues = [rStr, gStr, bStr].map((item) => this.clamp(item));
+      this.convertedValue = this.rgbToHex(rgbValues[0], rgbValues[1], rgbValues[2]);
       const root = document.documentElement;
       root.style.setProperty('--maindiv-bgcolor', this.convertedValue);
       this.copyToClipboard();
     },
     convertHEXtoRGB() {
-      if(!this.colorValue.startsWith('#')) {
-        this.conversionMessage = "Enter a hex value starting with a #";
-        return;
-      }
-      if(!this.colorValue || this.colorValue === '') {
+      const rawValue = this.colorValue;
+      if (!rawValue || rawValue.trim() === '') {
         this.conversionMessage = "Enter some value for conversion";
         return;
       }
-      if(!(/^#(?:[0-9A-F]{3}|[0-9A-F]{6})$/i.exec(this.colorValue))) {
+      const trimmedValue = rawValue.trim();
+      if (!trimmedValue.startsWith('#')) {
+        this.conversionMessage = "Enter a hex value starting with a #";
+        return;
+      }
+      if (!/^#(?:[0-9A-F]{3}|[0-9A-F]{6})$/i.test(trimmedValue)) {
         this.conversionMessage = "Enter a valid HEX string of length 3 or 6";
         return;
       }
-      const resultSix = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorValue);
-      const resultThree = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(this.colorValue);
-      if(resultThree) {
-        this.convertedValue = resultThree ? {
-          r: parseInt(resultThree[1]+resultThree[1], 16),
-          g: parseInt(resultThree[2]+resultThree[2], 16),
-          b: parseInt(resultThree[3]+resultThree[3], 16)
-        } : null;
+      const resultSix = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(trimmedValue);
+      const resultThree = /^#?([a-f\d]{1})([a-f\d]{1})([a-f\d]{1})$/i.exec(trimmedValue);
+      if (resultThree) {
+        this.convertedValue = {
+          r: parseInt(resultThree[1] + resultThree[1], 16),
+          g: parseInt(resultThree[2] + resultThree[2], 16),
+          b: parseInt(resultThree[3] + resultThree[3], 16)
+        };
       }
       else {
         this.convertedValue = resultSix ? {
@@ -77,6 +82,11 @@ var app = new Vue({
           g: parseInt(resultSix[2], 16),
           b: parseInt(resultSix[3], 16)
         } : null;
+      }
+
+      if (!this.convertedValue) {
+        this.conversionMessage = "Unable to convert HEX to RGB";
+        return;
       }
 
       this.convertedValue = `rgb(${this.convertedValue.r},${this.convertedValue.g},${this.convertedValue.b})`;
