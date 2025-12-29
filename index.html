@@ -12,14 +12,33 @@
     <div class="main-div">
       <h1>COLOR CONVERTER</h1>
       <div class="checkbox">
-        <span>HEX TO RGB</span><input type="checkbox" v-model="convertRGB"><span>RGB TO HEX</span>
+        <span>HEX TO RGB</span>
+        <input
+          type="checkbox"
+          v-model="convertRGB"
+          aria-label="Toggle between HEX to RGB and RGB to HEX conversion"
+        >
+        <span>RGB TO HEX</span>
       </div>
       <div class="main">
-        <input v-on:keyup.enter="convert" v-model="colorValue" type="text" class="color-value" :placeholder="convertRGB ? '255,255,255' : '#ffffff'">
-        <p class="conversionMessage">{{ conversionMessage }}</p>
-        <p class="convertedValue">{{ convertedValue }}</p>
+        <input
+          v-on:keyup.enter="convert"
+          v-model="colorValue"
+          type="text"
+          class="color-value"
+          :placeholder="convertRGB ? '255,255,255' : '#ffffff'"
+          aria-label="Color value input"
+        >
+        <p class="conversionMessage" aria-live="polite">{{ conversionMessage }}</p>
+        <p class="convertedValue" aria-live="polite">{{ convertedValue }}</p>
       </div>
-      <button @click="convert">CONVERT</button>
+      <button
+        @click="convert"
+        :disabled="!colorValue || colorValue.trim() === ''"
+      >
+        CONVERT
+      </button>
+      <div v-if="showToast" class="toast">{{ toastMessage }}</div>
     </div>
   </div>
   <script src="script.js"></script>

@@ -4,7 +4,9 @@ var app = new Vue({
     colorValue: '',
     convertedValue: '',
     convertRGB: true,
-    conversionMessage: ''
+    conversionMessage: '',
+    showToast: false,
+    toastMessage: ''
   },
   methods: {
     convert() {
@@ -102,15 +104,50 @@ var app = new Vue({
       return hex.length == 1 ? "0" + hex : hex;
     },
     copyToClipboard() {
-      const el = document.createElement('textarea');
-      el.value = this.convertedValue;
-      el.setAttribute('readonly', '');
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
+      const valueToCopy = this.convertedValue;
+      if (!valueToCopy) {
+        return;
+      }
+
+      // Prefer modern async clipboard API when available
+      const fallbackCopy = () => {
+        const el = document.createElement('textarea');
+        el.value = valueToCopy;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        try {
+          document.execCommand('copy');
+          this.toastMessage = 'Copied to clipboard';
+          this.showToast = true;
+        } catch (e) {
+          this.toastMessage = 'Unable to copy to clipboard';
+          this.showToast = true;
+        } finally {
+          document.body.removeChild(el);
+          setTimeout(() => {
+            this.showToast = false;
+          }, 2000);
+        }
+      };
+
+      if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(valueToCopy)
+          .then(() => {
+            this.toastMessage = 'Copied to clipboard';
+            this.showToast = true;
+            setTimeout(() => {
+              this.showToast = false;
+            }, 2000);
+          })
+          .catch(() => {
+            fallbackCopy();
+          });
+      } else {
+        fallbackCopy();
+      }
     }
   },
   watch: {
